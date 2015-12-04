@@ -1,0 +1,42 @@
+<!DOCTYPE>
+	<html manifest="cache.appcache">
+		<head>
+			<title>TODOLR</title>
+			<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+			<script src="javascript/script.js"></script>
+			<style src="stylesheets/style.css"></style>
+		</head>
+		<body onload="onload()">
+
+			<div id="header">
+				<img src="images/logo.png">
+				<ul>
+					<li><input type="button" class="submit" value="Show all" onclick="placeAll()"/><br/></li>
+					<li><input type="button" class="submit" value="Show achived files" onclick="placeArchived()"/><br/></li>
+					<li>
+						<input type="text" id="tagQuery" placeholder="Filter tags...">
+						<input type="button" class="submit" value="submit" onclick="filterTag()"/><br/>
+					</li>
+					<li><input type="button" class="submit" value="Filter priority" onclick="filterPriority()"/></li>
+					<li><input type="button" class="submit" value="Newest first" onclick="sortDate()"/></li>
+					<li><input type="button" class="submit" value="Oldest first" onclick="sortDate(true)"/></li>
+					<li><input type="button" class="submit" value="Refresh" onclick="get()"/></li>
+					<li><a>log uit</a></li>
+				</ul>
+			</div>
+
+			<div id="content"></div>
+
+				<form id="newItem" action="set">
+					<input type="text" name="title" class="title" placeholder="Title..."><br/>
+					<input type="text" name="text"class="text" placeholder="Text..."><br/>
+					<input type="text" name="pic"class="pic" placeholder="Picture URL..."><br/>
+					<input type="text" name="tags"class="tags" placeholder="Tag..."><br/>
+					<input type="date" name="date"class="date" ><br/>
+					<input type="checkbox" name="priority" class="checkbox" id="priority">priority<br/>
+					<input type="button" class="submit" value="submit" onclick="newItem()"/>
+				</form>
+			</div>
+
+		</body>
+</html>
