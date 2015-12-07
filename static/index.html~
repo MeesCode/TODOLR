@@ -24,8 +24,9 @@
 					<li><input type="button" class="submit" value="Log Out" onclick=""/></li>
 				</ul>
 			</div>
-
-
+				
+				<div id="content">
+				
 				<form id="newItem" class="item" action="set">
 					<input type="text" name="title" class="title" placeholder="Title...">
 					<input type="text" name="text"class="text" placeholder="Text...">
@@ -36,7 +37,8 @@
 					<input type="button" class="submit" value="submit" onclick="newItem()"/>
 				</form>
 				
-				<div id="content"></div>
+				
+				</div>
 				
 			</div>
 
