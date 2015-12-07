@@ -1,42 +1,112 @@
-<!DOCTYPE>
-	<html manifest="cache.appcache">
-		<head>
-			<title>TODOLR</title>
-			<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
-			<script src="javascript/script.js"></script>
-			<style src="stylesheets/style.css"></style>
-		</head>
-		<body onload="onload()">
+<html manifest="cache.appcache">
+    <head>
+      <title>TODOLR</title>
+      <script src="javascript/script.js"></script>
+      <style src="stylesheets/style.css"></style>
+    </head>
+    <h1>
+      <img src="images/logo.png" class="centered"/><br>
+    </h1> 
+    <body onload="onload()">
+      <div id="header">
+        <ul>
+          <li>
+            <input type="button" class="submit" value="Show all" onclick="placeAll()"/>
+          </li>
+          <li>
+            <input type="button" class="submit" value="Show achived files" onclick="placeArchived()"/>
+          </li>
+          <li>
+            <input type="text" id="tagQuery" placeholder="Filter tags...">
+            <input type="button" class="submit1" value="submit" onclick="filterTag()"/>
+          </li>
+          <li>
+            <input type="button" class="submit" value="Filter priority" onclick="filterPriority()"/>
+          </li>
+          <li>
+            <input type="button" class="submit" value="Newest first" onclick="sortDate()"/>
+          </li>
+          <li>
+            <input type="button" class="submit" value="Oldest first" onclick="sortDate(true)"/>
+          </li>
+          <li>
+            <input type="button" class="submit" value="Log Out"/>
+          </li>
+        </ul>
+      </div>
+      <br><br><br>
 
-			<div id="header">
-				<img src="images/logo.png">
-				<ul>
-					<li><input type="button" class="submit" value="Show all" onclick="placeAll()"/><br/></li>
-					<li><input type="button" class="submit" value="Show achived files" onclick="placeArchived()"/><br/></li>
-					<li>
-						<input type="text" id="tagQuery" placeholder="Filter tags...">
-						<input type="button" class="submit" value="submit" onclick="filterTag()"/><br/>
-					</li>
-					<li><input type="button" class="submit" value="Filter priority" onclick="filterPriority()"/></li>
-					<li><input type="button" class="submit" value="Newest first" onclick="sortDate()"/></li>
-					<li><input type="button" class="submit" value="Oldest first" onclick="sortDate(true)"/></li>
-					<li><input type="button" class="submit" value="Refresh" onclick="get()"/></li>
-					<li><a>log uit</a></li>
-				</ul>
-			</div>
 
-			<div id="content"></div>
+      <div id="content"></div>
 
-				<form id="newItem" action="set">
-					<input type="text" name="title" class="title" placeholder="Title..."><br/>
-					<input type="text" name="text"class="text" placeholder="Text..."><br/>
-					<input type="text" name="pic"class="pic" placeholder="Picture URL..."><br/>
-					<input type="text" name="tags"class="tags" placeholder="Tag..."><br/>
-					<input type="date" name="date"class="date" ><br/>
-					<input type="checkbox" name="priority" class="checkbox" id="priority">priority<br/>
-					<input type="button" class="submit" value="submit" onclick="newItem()"/>
-				</form>
-			</div>
+        <form id="newItem">
+          <input type="text" class="title" placeholder="Title..."><br/>
+          <input type="text" class="text" placeholder="Text..."><br/>
+          <input type="text" class="pic" placeholder="Picture URL..."><br/>
+          <input type="text" class="tags" placeholder="Tag..."><br/>
+          <input type="date" class="date" ><br/>
+          <input type="checkbox" class="checkbox" id="priority">priority<br/>
+          <input type="button" class="submit1" value="submit" onclick="newItem()"/><br><br>
+        </form>
+      </div>
 
-		</body>
+    </body>
+    <style>
+    body{
+      background-color: #35465C
+      
+    }
+
+    ul{
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      width: 1920px;
+      height: 100px;
+      border-top: 2px solid #FFFFFF;
+      border-bottom: 2px solid #FFFFFF;
+    }
+
+    li{
+      float : left;
+      display: inline;
+      color: white;
+      background-color: #0BBFFF;
+    }
+
+    .submit{
+      display : block;
+      height : 100px;
+      width: 274px;
+      background: #35465C;
+      border :none;
+
+      color :white;
+      text-align : center;
+      font: bold 1em/100px Arial;
+    }
+
+    form{
+      text-decoration: none;
+      color: #000;
+      background: #FFC;
+      display: block;
+      height: 15em;
+      width: 15em;
+      padding: 1em;
+    }
+
+    .item{
+      text-decoration: none;
+      color: #000;
+      background: #FFC;
+      display: block;
+      height: 15em;
+      width: 15em;
+      padding: 1em;
+    }
+    h1{
+      text-align: center;
+    }
+  </style>
 </html>
