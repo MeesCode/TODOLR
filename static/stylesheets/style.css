@@ -8,7 +8,7 @@ body{
 	margin-left: auto;
 	margin-right: auto;
 	display: block;
-	margin-top: 10px;
+	padding-top: 10px;
 	margin-bottom: 10px;
 }
 
@@ -50,8 +50,7 @@ li{
 
 input{
   width: 100%;
-  border-radius: 3px;
-  border: 1px solid grey;
+  border: 0px;
 }
 
 form{
@@ -68,10 +67,46 @@ form{
 	max-width: 100%;
 }
 
+.item input:nth-of-type(1){
+  font-size: 30px;
+  border-bottom: 1px solid #e3e3e3;
+  padding-bottom: 10px;
+  font: bold 30px Arial;
+}
+
+.item input:nth-of-type(2){
+  margin-top: 10px;
+  padding-bottom: 20px;
+  font: 16px Arial;
+}
+
+.item input:nth-of-type(8){
+  margin-top: 10px;
+  padding: 10px;
+  color: white;
+  background-color: #c95353;
+  border-radius: 3px;
+  font: bold 16px Arial;
+  transition: all ease 0.2s;
+}
+
+.item input:nth-of-type(8):hover{
+  background-color: #ab4646;
+}
+
 .item .submit{
 	width: 100px;
-	height: 50px;
-	background-color: grey;
+	height: 38px;
+  padding: 10px;
+	background-color: #539bc9;
+  border-radius: 3px;
+  width: 100%;
+  margin-top: 10px;
+  transition: all ease 0.2s;
+}
+
+.item .submit:hover{
+  background-color: #4582a8;
 }
 
 .item .checkbox{
@@ -95,7 +130,7 @@ form{
   padding: 20px;
   width: 300px;
   float: left;
-  border-radius: 8px;
+  border-radius: 3px;
   height: auto;
 }
 
@@ -119,7 +154,13 @@ form{
 #register input:nth-child(3){
   background-color: #539bc9;
   color: white;
-  margin-top: 20px;
+  position: relative;
+  top: 20px;
+  transition: all ease 0.2s;
+}
+
+#register input:nth-child(3):hover{
+  background-color: #4582a8;
 }
 
 h1{

@@ -210,18 +210,18 @@ function place(item){
   div.id = item.idCounter;
 
   //literally write the html
-  div.innerHTML = "<input type=\"text\" class=\"title\" onblur=\"changeItem(" + item.idCounter + ")\" value=\"" + item.title + "\"/><br/>"
-                + "<input type=\"text\" class=\"text\" onblur=\"changeItem(" + item.idCounter + ")\" value=\"" + item.text + "\"/><br/>"
-                + "<input type=\"text\" class=\"picbox\" onblur=\"changeItem(" + item.idCounter + ")\" value=\"" + item.pic + "\"/><br/>"
-                + "<img class=\"pic\" src=\"" + item.pic + "\"><br/>"
-                + "<input type=\"text\" class=\"tags\" onblur=\"changeItem(" + item.idCounter + ")\" value=\"" + item.tags + "\"/><br/>"
-                + "<input type=\"date\" class=\"date\" onblur=\"changeItem(" + item.idCounter + ")\" value=\"" + item.date + "\"/><br/>"
+  div.innerHTML = "<input type=\"text\" class=\"title\" onblur=\"changeItem(" + item.idCounter + ")\" value=\"" + item.title + "\"/>"
+                + "<input type=\"text\" class=\"text\" placeholder=\"Text...\" onblur=\"changeItem(" + item.idCounter + ")\" value=\"" + item.text + "\"/>"
+                + "<input type=\"text\" class=\"picbox\" placeholder=\"Picture URL...\" onblur=\"changeItem(" + item.idCounter + ")\" value=\"" + item.pic + "\"/>"
+                + "<img class=\"pic\" src=\"" + item.pic + "\">"
+                + "<input type=\"text\" class=\"tags\" placeholder=\"tags...\" onblur=\"changeItem(" + item.idCounter + ")\" value=\"" + item.tags + "\"/>"
+                + "<input type=\"date\" class=\"date\" onblur=\"changeItem(" + item.idCounter + ")\" value=\"" + item.date + "\"/>"
                 + "<input type=\"checkbox\" class=\"priority\" onclick=\"changeItem(" + item.idCounter + ")\">priority<br/>"
-                + "<input type=\"checkbox\" class=\"done\" onclick=\"changeItem(" + item.idCounter + ")\">done<br/>";
+                + "<input type=\"checkbox\" class=\"done\" onclick=\"changeItem(" + item.idCounter + ")\">done";
                 if(item.archived){
-                  div.innerHTML += "<input type=\"button\" value=\"remove from archive\" onclick=\"toggleArchive(" + item.idCounter + ")\"/><br/><br/>";
+                  div.innerHTML += "<input type=\"button\" value=\"remove from archive\" onclick=\"toggleArchive(" + item.idCounter + ")\"/>";
                 } else {
-                  div.innerHTML += "<input type=\"button\" value=\"archive\" onclick=\"toggleArchive(" + item.idCounter + ")\"/><br/><br/>";
+                  div.innerHTML += "<input type=\"button\" value=\"archive\" onclick=\"toggleArchive(" + item.idCounter + ")\"/>";
                 }
 
   //place on screen
