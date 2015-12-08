@@ -2,6 +2,7 @@ body{
   background-color: #35465C;
   margin: 0px;
   font-family: sans-serif;
+  text-align: center;
 }
 
 #header img{
@@ -9,7 +10,43 @@ body{
 	margin-right: auto;
 	display: block;
 	padding-top: 10px;
-	margin-bottom: 10px;
+  padding-bottom: 10px;
+}
+
+#items{
+  position: relative;
+  top: 60px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+#search{
+  width: 100%;
+  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#search input:nth-of-type(1){
+  padding: 12px;
+  width: 40%;
+  border-radius: 3px;
+}
+
+#search input:nth-of-type(2){
+  width: 100px;
+	height: 38px;
+  padding: 10px;
+	background-color: #539bc9;
+  border-radius: 3px;
+  width: 80px;
+  transition: all ease 0.2s;
+  color: white;
+  font: bold 16px Arial;
+}
+
+#search input:nth-of-type(2):hover{
+  background-color: #4582a8;
 }
 
 ul{
@@ -20,10 +57,10 @@ ul{
   border-top: 2px solid #7e96b9;
   border-bottom: 2px solid #7e96b9;
   display: inline-block;
+  text-align: center;
 }
 
 li{
-  float : left;
   display: inline-block;
   color: white;
   background-color: #0BBFFF;
@@ -80,6 +117,16 @@ form{
   font: 16px Arial;
 }
 
+.item input:nth-of-type(6){
+  display: inline-block;
+}
+
+.item input:nth-of-type(2){
+  margin-top: 10px;
+  padding-bottom: 20px;
+  font: 16px Arial;
+}
+
 .item input:nth-of-type(8){
   margin-top: 10px;
   padding: 10px;
@@ -110,28 +157,63 @@ form{
 }
 
 .item .checkbox{
-	width: auto;
+  position: relative;
+  right: 2px;
+  width: 15px;
 }
 
 .item .priority{
-	width: auto;
+  position: relative;
+  right: 141px;
+  width: 15px;
 }
 
 .item .done{
-	width: auto;
+  position: relative;
+  right: 141px;
+  width: 15px;
 }
 
 .item{
   text-decoration: none;
   color: #000;
   background-color: white;
-  display: inline-block;
-  margin: 20px;
+  display: block;
+  margin: 10px;
   padding: 20px;
   width: 300px;
   float: left;
   border-radius: 3px;
   height: auto;
+}
+
+#priority{
+  display: block;
+}
+
+#priority::after{
+  content: "priority";
+  position: relative;
+  left: 18px;
+  bottom: 2px;
+}
+
+.priority{
+  display: block;
+}
+
+.priority::after{
+  content: "priority";
+  position: relative;
+  left: 18px;
+  bottom: 2px;
+}
+
+.done::after{
+  content: "done";
+  position: relative;
+  left: 18px;
+  bottom: 2px;
 }
 
 #register input{

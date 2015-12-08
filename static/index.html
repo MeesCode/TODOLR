@@ -12,33 +12,33 @@
 				<img src="images/logo.png"/>
 				<ul>
 					<li><input type="button" class="submit" value="Show all" onclick="placeAll()"/></li>
-					<li><input type="button" class="submit" value="Show achived files" onclick="placeArchived()"/></li>
-					<li>
-						<input type="text" id="tagQuery" class="tagsubmit" placeholder="Filter tags...">
-						<input type="button" class="tagsubmit" value="submit" onclick="filterTag()"/>
-					</li>
+					<li><input type="button" class="submit" value="Achived files" onclick="placeArchived()"/></li>
 					<li><input type="button" class="submit" value="Filter priority" onclick="filterPriority()"/></li>
 					<li><input type="button" class="submit" value="Newest first" onclick="sortDate()"/></li>
 					<li><input type="button" class="submit" value="Oldest first" onclick="sortDate(true)"/></li>
 					<li><input type="button" class="submit" value="Refresh" onclick="get()"/></li>
-					<li><input type="button" class="submit" value="Log Out" onclick=""/></li>
+					<li><input type="button" class="submit" value="Log out" onclick=""/></li>
 				</ul>
 			</div>
 
+			<div id="search">
+				<input type="text" id="tagQuery" class="tagsubmit" placeholder="Filter tags...">
+				<input type="submit" class="tagsubmit" value="submit" onclick="filterTag()"/>
+			</div>
 
+			<div id="items">
 				<form id="newItem" class="item" action="set">
 					<input type="text" name="title" class="title" placeholder="Title...">
 					<input type="text" name="text"class="text" placeholder="Text...">
 					<input type="text" name="pic"class="pic" placeholder="Picture URL...">
 					<input type="text" name="tags"class="tags" placeholder="Tag...">
 					<input type="date" name="date"class="date" >
-					<input type="checkbox" name="priority" class="checkbox" id="priority">priority
+					<input type="checkbox" name="priority" class="checkbox" id="priority">
 					<input type="button" class="submit" value="submit" onclick="newItem()"/>
 				</form>
-				
-				<div id="content"></div>
-				
-			</div>
 
+
+				<div id="content"></div>
+			</div>
 		</body>
 </html>

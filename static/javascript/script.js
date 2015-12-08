@@ -216,8 +216,8 @@ function place(item){
                 + "<img class=\"pic\" src=\"" + item.pic + "\">"
                 + "<input type=\"text\" class=\"tags\" placeholder=\"tags...\" onblur=\"changeItem(" + item.idCounter + ")\" value=\"" + item.tags + "\"/>"
                 + "<input type=\"date\" class=\"date\" onblur=\"changeItem(" + item.idCounter + ")\" value=\"" + item.date + "\"/>"
-                + "<input type=\"checkbox\" class=\"priority\" onclick=\"changeItem(" + item.idCounter + ")\">priority<br/>"
-                + "<input type=\"checkbox\" class=\"done\" onclick=\"changeItem(" + item.idCounter + ")\">done";
+                + "<input type=\"checkbox\" class=\"priority\" onclick=\"changeItem(" + item.idCounter + ")\"><br/>"
+                + "<input type=\"checkbox\" class=\"done\" onclick=\"changeItem(" + item.idCounter + ")\">";
                 if(item.archived){
                   div.innerHTML += "<input type=\"button\" value=\"remove from archive\" onclick=\"toggleArchive(" + item.idCounter + ")\"/>";
                 } else {
