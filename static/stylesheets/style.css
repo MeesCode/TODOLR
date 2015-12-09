@@ -226,21 +226,29 @@ form{
   background-color: #ffdbdd;
 }
 
+#register{
+  display: inline-block;
+  width: 300px;
+}
+
 #register input{
   height: 50px;
   width: 300px;
   font-size: 20px;
   border: 0px;
+  background-color: white;
 }
 
 #register input:nth-child(1){
   border-radius: 3px 3px 0px 0px;
   border-bottom: 1px solid #e3e3e3;
   display: inline-block;
+  padding-left: 10px;
 }
 
 #register input:nth-child(2){
   border-radius: 0px 0px 3px 3px;
+  padding-left: 10px;
 }
 
 #register input:nth-child(3){
