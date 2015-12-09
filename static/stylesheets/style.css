@@ -15,7 +15,7 @@ body{
 
 #items{
   position: relative;
-  top: 60px;
+  top: 70px;
   margin-left: 20px;
   margin-right: 20px;
 }
@@ -31,6 +31,7 @@ body{
   padding: 12px;
   width: 40%;
   border-radius: 3px;
+  background-color: white;
 }
 
 #search input:nth-of-type(2){
@@ -88,6 +89,7 @@ li{
 input{
   width: 100%;
   border: 0px;
+  background-color: rgba(255,255,255,0);
 }
 
 form{
@@ -214,6 +216,14 @@ form{
   position: relative;
   left: 18px;
   bottom: 2px;
+}
+
+.itemdone{
+  background-color: #e9ffdb;
+}
+
+.itemOverdue{
+  background-color: #ffdbdd;
 }
 
 #register input{

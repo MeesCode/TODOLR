@@ -1,7 +1,7 @@
 //initialize variables when page loads
 function onload(){
   array = new arrayList();
-  refresh();
+  get();
 }
 
 var get = function get(){
@@ -145,7 +145,7 @@ function changeItem(i){
   var done = document.getElementById(i).getElementsByClassName("done")[0].checked;
   var archived = array.get(i).archived;
 
-  $.get("/change", {"idCounter":i, "title":title, "text":text, "pic":pic, "tags":tags, "date":date, "priority":priority, "done":done, "archived":archived});
+  $.get("/change", {"idCounter":i, "title":title, "text":text, "pic":pic, "tags":tags, "date":date, "priority":priority, "done":done, "archived":archived}, get);
 
 }
 
@@ -209,8 +209,16 @@ function place(item){
   div.className = "item";
   div.id = item.idCounter;
 
+  var tempDate = new Date();
+  if(new Date(item.date).getTime() < tempDate.getTime() && !item.done){
+    div.className += " itemOverdue";
+  }
+  if(item.done){
+    div.className += " itemDone";
+  }
+
   //literally write the html
-  div.innerHTML = "<input type=\"text\" class=\"title\" onblur=\"changeItem(" + item.idCounter + ")\" value=\"" + item.title + "\"/>"
+  div.innerHTML = "<input type=\"text\" class=\"title\" placeholder=\"Title...\" onblur=\"changeItem(" + item.idCounter + ")\" value=\"" + item.title + "\"/>"
                 + "<input type=\"text\" class=\"text\" placeholder=\"Text...\" onblur=\"changeItem(" + item.idCounter + ")\" value=\"" + item.text + "\"/>"
                 + "<input type=\"text\" class=\"picbox\" placeholder=\"Picture URL...\" onblur=\"changeItem(" + item.idCounter + ")\" value=\"" + item.pic + "\"/>"
                 + "<img class=\"pic\" src=\"" + item.pic + "\">"
