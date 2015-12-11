@@ -75,9 +75,17 @@ app.get("/change", function(req, res){
   (query["done"] == "true") ? query["done"] = true : query["done"] = false;
   (query["archived"] == "true") ? query["archived"] = true : query["archived"] = false;
 
-  array[query["idCounter"]] = (new item(query["title"], query["text"], query["pic"],
-                      query["tags"], query["date"], query["priority"],
-                      query["done"], query["archived"], query["idCounter"]));
+  query["idCounter"]++;
+
+  var itemQuery = "UPDATE ToDoItem SET Title=\""+query["title"]+"\", Text=\""+query["text"]+"\", Pic=\""+query["pic"]+"\", "
+                 +"DueDate=\""+query["date"]+"\", Completed="+query["done"]+", Priority="+query["priority"]+", Archived="+query["archived"]
+                 +" WHERE Id="+query["idCounter"];
+
+  var tagQuery = "UPDATE Tag SET Text=\""+query["tags"]+"\" WHERE Id="+query["idCounter"];
+
+  connection.query(itemQuery, addToDatabase);
+  connection.query(tagQuery, addToDatabase);
+
   res.end();
 });
 
@@ -99,7 +107,6 @@ app.get("/set", function(req, res){
   idCounter++;
   var itemTagQuery = "INSERT INTO ItemTag (ToDoId, TagId) VALUES (" + idCounter + ", " + idCounter + ")";
 
-  console.log(itemTagQuery);
   connection.query(itemQuery, addToDatabase);
   connection.query(tagQuery, addToDatabase);
   connection.query(itemTagQuery, addToDatabase);
