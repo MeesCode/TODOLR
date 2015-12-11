@@ -3,7 +3,7 @@ var express = require("express");
 var url = require("url");
 var mysql = require("mysql");
 var app = express();
-var idCounter = 1;
+var idCounter = 0;
 
 //create server and set templates
 http.createServer(app).listen(8080);
@@ -13,7 +13,7 @@ app.use(express.static('static'));
 var connection = mysql.createConnection({
   host     : "localhost",
   user     : "root",
-  password : "merel4840",
+  password : "",
   database : "todo"
 });
 
@@ -98,6 +98,7 @@ app.get("/get", function(req, res){
         (result[i].archived == 1) ? result[i].archived = true : result[i].archived = false;
         res.end(JSON.stringify(result));
       }
+      res.end();
     } else {
       console.log("error while setting: " + err);
     }
