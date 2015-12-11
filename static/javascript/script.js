@@ -39,7 +39,6 @@ var saveArray = function saveArray(json){
 function toggleArchive(i){
   array.toggleArchive(i);
   changeItem(i);
-  document.getElementById(i).remove();
 }
 
 //remove all items from screen (don't archive them)
@@ -173,19 +172,6 @@ function arrayList(){
   this.getLength = function (){
     return array1.length;
   }
-}
-
-//item object
-function item(title, text, pic, tags, date, priority, done, archived, idCounter){
-  this.title = title;
-  this.text = text;
-  this.pic = pic;
-  this.tags = tags;
-  this.date = date;
-  this.priority = priority;
-  this.idCounter = idCounter;
-  this.done = done;
-  this.archived = archived;
 }
 
 //clear new item input fields

@@ -5,59 +5,24 @@ var mysql = require("mysql");
 var app = express();
 var idCounter = 1;
 
+//create server and set templates
 http.createServer(app).listen(8080);
 app.use(express.static('static'));
 
+//set databse connection variables
 var connection = mysql.createConnection({
   host     : "localhost",
   user     : "root",
-  password : "",
+  password : "merel4840",
   database : "todo"
 });
 
+//connect to database
 connection.connect(function(err) {
   console.log("Connected to database");
 });
 
-var array = [];
-
-function item(title, text, pic, tags, date, priority, done, archived, idCounter){
-  this.title = title;
-  this.text = text;
-  this.pic = pic;
-  this.tags = tags;
-  this.date = date;
-  this.priority = priority;
-  this.done = done;
-  this.archived = archived;
-  this.idCounter = idCounter;
-}
-
-var getQuery = "SELECT Title AS title, ToDoItem.Text AS text, Pic AS pic, Tag.Text AS tags,"
-             + "DueDate AS date, Priority AS priority, Completed AS done, Archived AS archived, ToDoItem.Id-1 AS idCounter "
-             + "FROM ToDoItem, ItemTag, Tag "
-             + "WHERE ToDoItem.Id=ItemTag.ToDoId AND ItemTag.TagId=Tag.Id";
-
-var getFromDatabase = function(err, result) {
-  if (!err){
-
-    if(idCounter){
-      idCounter = result[result.length-1].idCounter + 1;
-    }
-    console.log("Database returned, idCounter: " + idCounter);
-
-    for(var i = 0; i < result.length; i++){
-      (result[i].priority == 1) ? result[i].priority = true : result[i].priority = false;
-      (result[i].done == 1) ? result[i].done = true : result[i].done = false;
-      (result[i].archived == 1) ? result[i].archived = true : result[i].archived = false;
-      array = result;
-    }
-
-  } else {
-    console.log("error with database connection: " + err);
-  }
-}
-
+//check for errors
 var addToDatabase = function(err, result) {
   if (!err){
     console.log("item added");
@@ -66,6 +31,7 @@ var addToDatabase = function(err, result) {
   }
 }
 
+//change content in database
 app.get("/change", function(req, res){
   console.log("change request");
   res.writeHead(200);
@@ -89,6 +55,7 @@ app.get("/change", function(req, res){
   res.end();
 });
 
+//add content to database
 app.get("/set", function(req, res){
   console.log("set request");
   res.writeHead(200);
@@ -113,9 +80,26 @@ app.get("/set", function(req, res){
   res.end();
 });
 
+//get contents from database and return them
 app.get("/get", function(req, res){
   console.log("get request");
   res.writeHead(200);
-  connection.query(getQuery, getFromDatabase);
-  res.end(JSON.stringify(array));
+  var getQuery = "SELECT Title AS title, ToDoItem.Text AS text, Pic AS pic, Tag.Text AS tags,"
+               + "DueDate AS date, Priority AS priority, Completed AS done, Archived AS archived, ToDoItem.Id-1 AS idCounter "
+               + "FROM ToDoItem, ItemTag, Tag "
+               + "WHERE ToDoItem.Id=ItemTag.ToDoId AND ItemTag.TagId=Tag.Id";
+  connection.query(getQuery, function(err, result) {
+    if (!err){
+      idCounter = result.length;
+      console.log("Database returned, idCounter: " + idCounter);
+      for(var i = 0; i < result.length; i++){
+        (result[i].priority == 1) ? result[i].priority = true : result[i].priority = false;
+        (result[i].done == 1) ? result[i].done = true : result[i].done = false;
+        (result[i].archived == 1) ? result[i].archived = true : result[i].archived = false;
+        res.end(JSON.stringify(result));
+      }
+    } else {
+      console.log("error while setting: " + err);
+    }
+  });
 });
