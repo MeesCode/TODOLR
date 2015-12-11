@@ -1,3 +1,11 @@
+Changes to database:
+ - Added Pic variable to ToDoItem;
+ - Date is now returned as a string
+ - Priority is now a boolean value
+ - Completed is now a boolean value
+ - Priority is no longer a primary key
+ - Removed Multi-user tables
+ - Removed Removed unused items
 
 1) SELECT * FROM ToDoList WHERE Id=1
 +----+--------+---------------------+-------+----------+
@@ -108,6 +116,4 @@
 | personal |         4 |       4 |
 +----------+-----------+---------+
 
-9) 
-
-
+9)
