@@ -13,7 +13,7 @@ app.use(express.static('static'));
 var connection = mysql.createConnection({
   host     : "localhost",
   user     : "root",
-  password : "",
+  password : "webdata",
   database : "todo"
 });
 
