@@ -6,7 +6,7 @@ var app = express();
 var idCounter = 0;
 
 //create server and set templates
-http.createServer(app).listen(8080);
+http.createServer(app).listen(80);
 app.use(express.static('static'));
 
 //set databse connection variables
