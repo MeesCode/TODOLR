@@ -112,20 +112,7 @@ Changes to database:
 | personal |         4 |       4 |
 +----------+-----------+---------+
 
-9) SELECT CreationDate AS Week, COUNT(*) AS Todos FROM ToDoItem GROUP BY EXTRACT(WEEK FROM CreationDate);
-+---------------------+-------+
-| Week                | Todos |
-+---------------------+-------+
-| 2014-05-14 11:52:44 |     1 |
-| 2014-09-05 12:45:35 |     1 |
-| 2014-10-05 21:26:54 |     1 |
-| 2014-10-25 21:25:55 |     2 |
-| 2014-11-02 18:25:44 |     1 |
-| 2014-11-17 12:56:12 |     8 |
-| 2014-11-24 22:02:35 |     6 |
-| 2014-12-01 14:55:32 |     6 |
-| 2014-12-12 15:48:55 |     1 |
-+---------------------+-------+
+9)
 
 10) SELECT Tag.text AS Tag, Datediff(ToDoItem.CompletionDate, ToDoItem.CreationDate) As Days FROM ToDoItem, Tag, ItemTag WHERE ToDoItem.Completed = 1 AND Tag.Id = ItemTag.TagId AND ItemTag.ToDoId = ToDoItem.Id GROUP BY Tag.Id, datediff(ToDoItem.CompletionDate, ToDoItem.CreationDate);
 +----------+------+
