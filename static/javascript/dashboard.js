@@ -1,6 +1,7 @@
 function onload(){
   $.getJSON("/dashboard/idcounter", idcounter);
   $.getJSON("/dashboard/pending", pending);
+  $.getJSON("/dashboard/archived", archived);
   $.getJSON("/dashboard/users", users);
   $.getJSON("/dashboard/tags", tags);
   $.getJSON("/dashboard/images", images);
@@ -19,6 +20,16 @@ var pending = function pending(json){
                 + "<br/>Percentage completed: " + per + "%<br/><br/>";
   div.innerHTML += percentageBar(per);
 }
+
+var archived = function archived(json){
+  var div = document.getElementById("archived");
+  var per = Math.round(json[0].archived*100/(json[0].active+json[0].archived));
+  div.innerHTML = "Number of archived items: " + json[0].archived
+                + "<br/>Number of active items: " + json[0].active
+                + "<br/>Percentage archived: " + per + "%<br/><br/>";
+  div.innerHTML += percentageBar(per);
+}
+
 var users = function users(json){
   var div = document.getElementById("users");
   div.innerHTML = "Number of users: " + json[0].users;

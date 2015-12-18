@@ -115,7 +115,11 @@ app.get("/dashboard/:type", function(req, res){
   }
   if(type == "pending"){
     console.log("dashboard request: pending");
-    var getQuery = "SELECT SUM(Completed) AS completed, COUNT(*)-SUM(Completed) AS pending FROM ItemTag JOIN Tag ON ItemTag.TagId=Tag.Id JOIN ToDoItem ON ToDoItem.Id=ItemTag.ToDoId";
+    var getQuery = "SELECT SUM(Completed) AS completed, COUNT(*)-SUM(Completed) AS pending FROM ToDoItem";
+  }
+  if(type == "archived"){
+    console.log("dashboard request: archived");
+    var getQuery = "SELECT SUM(Archived) AS archived, COUNT(*)-SUM(Archived) AS active FROM ToDoItem";
   }
   if(type == "users"){
     console.log("dashboard request: users");
