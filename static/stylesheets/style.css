@@ -266,3 +266,45 @@ form{
 h1{
   text-align: center;
 }
+
+.databox{
+  background-color: white;
+  height: auto;;
+  min-height: 100px;
+  width: 300px;
+  background-color: white;
+  border-radius: 3px;
+  float: left;
+  padding: 20px;
+  margin: 10px;
+  font-size: 1em;
+}
+
+#allimages{
+  width: auto;
+  min-width: 300px;
+}
+
+#allimages img{
+  height: 200px;
+  width: auto;
+  margin: 20px;
+}
+
+.datacontainer{
+  display: flex;
+  width: 100%;
+}
+
+.percentage-base{
+  width: 100%;
+  background-color: #539bc9;
+  border-radius: 2px;
+  height: 15px;
+}
+
+.percentage-body{
+  background-color: #c95353;
+  height: 15px;
+  border-radius: 2px;
+}

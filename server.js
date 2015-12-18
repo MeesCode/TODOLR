@@ -6,7 +6,7 @@ var app = express();
 var idCounter = 0;
 
 //create server and set templates
-http.createServer(app).listen(80);
+http.createServer(app).listen(8080);
 app.use(express.static('static'));
 
 //set databse connection variables
@@ -101,6 +101,41 @@ app.get("/get", function(req, res){
       res.end();
     } else {
       console.log("error while setting: " + err);
+    }
+  });
+});
+
+//dashboard page
+app.get("/dashboard/:type", function(req, res){
+  var type = req.params.type;
+  console.log(type);
+  if(type == "idcounter"){
+    console.log("dashboard request: idCounter");
+    var getQuery = "SELECT COUNT(*) AS idCounter FROM ToDoItem";
+  }
+  if(type == "pending"){
+    console.log("dashboard request: pending");
+    var getQuery = "SELECT SUM(Completed) AS completed, COUNT(*)-SUM(Completed) AS pending FROM ItemTag JOIN Tag ON ItemTag.TagId=Tag.Id JOIN ToDoItem ON ToDoItem.Id=ItemTag.ToDoId";
+  }
+  if(type == "users"){
+    console.log("dashboard request: users");
+    var getQuery = "SELECT COUNT(*) AS users FROM User";
+  }
+  if(type == "tags"){
+    console.log("dashboard request: users");
+    var getQuery = "SELECT Text AS tag FROM Tag WHERE Text <> \"\"";
+  }
+  if(type == "images"){
+    console.log("dashboard request: users");
+    var getQuery = "SELECT Pic AS pic FROM ToDoItem WHERE Pic <> \"\"";
+  }
+  res.writeHead(200);
+  connection.query(getQuery, function(err, result) {
+    if (!err){
+      console.log("Database returned");
+      res.end(JSON.stringify(result));
+    } else {
+      console.log("error while getting dashboard info");
     }
   });
 });
