@@ -6,7 +6,7 @@ var app = express();
 var idCounter = 0;
 
 //create server and set templates
-http.createServer(app).listen(8080);
+http.createServer(app).listen(80);
 app.use(express.static('static'));
 
 //set databse connection variables
@@ -123,11 +123,11 @@ app.get("/dashboard/:type", function(req, res){
   }
   if(type == "tags"){
     console.log("dashboard request: users");
-    var getQuery = "SELECT Text AS tag FROM Tag WHERE Text <> \"\"";
+    var getQuery = "SELECT DISTINCT Text AS tag FROM Tag WHERE Text <> \"\"";
   }
   if(type == "images"){
     console.log("dashboard request: users");
-    var getQuery = "SELECT Pic AS pic FROM ToDoItem WHERE Pic <> \"\"";
+    var getQuery = "SELECT DISTINCT Pic AS pic FROM ToDoItem WHERE Pic <> \"\"";
   }
   res.writeHead(200);
   connection.query(getQuery, function(err, result) {
