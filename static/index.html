@@ -3,6 +3,8 @@
 		<head>
 			<title>TODOLR</title>
 			<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/packery/1.4.3/packery.pkgd.js"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/3.3.2/masonry.pkgd.js"></script>
 			<script src="javascript/script.js"></script>
 			<link rel="stylesheet" type="text/css" href="stylesheets/style.css">
 		</head>
@@ -11,13 +13,12 @@
 			<div id="header">
 				<img src="images/logo.png"/>
 				<ul>
-					<li><input type="button" class="submit" value="Show all" onclick="placeAll()"/></li>
+					<li><input type="button" class="submit" value="Show all" onclick="getRefresh()"/></li>
 					<li><input type="button" class="submit" value="Achived files" onclick="placeArchived()"/></li>
 					<li><input type="button" class="submit" value="Filter priority" onclick="filterPriority()"/></li>
 					<li><input type="button" class="submit" value="Newest first" onclick="sortDate()"/></li>
 					<li><input type="button" class="submit" value="Oldest first" onclick="sortDate(true)"/></li>
-					<li><input type="button" class="submit" value="Refresh" onclick="get()"/></li>
-					<li><input type="button" class="submit" value="Log out" onclick=""/></li>
+					<li><input type="button" class="submit" value="Log out" onclick="masonry()"/></li>
 				</ul>
 			</div>
 

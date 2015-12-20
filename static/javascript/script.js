@@ -1,16 +1,47 @@
+
+$(window).load(function() {
+  getRefresh();
+  masonry();
+});
+
+function masonry(){
+  $content = $('#items');
+
+	$content.masonry({
+		columnWidth: 340,
+		itemSelector: '.item',
+		gutter: 10
+	});
+
+}
+
+
 //initialize variables when page loads
 function onload(){
   array = new arrayList();
-  get();
+  getRefresh();
 }
 
 var get = function get(){
+  $.getJSON("/get", saveArray2);
+}
+
+var getRefresh = function getRefresh(){
   $.getJSON("/get", saveArray);
+}
+
+var placeNewItem = function placeNewItem(){
+  place(array.get(array.getLength()-1));
+  $content.masonry("reloadItems");
+  masonry();
 }
 
 var refresh = function refresh(){
   removeAll();
   placeAll();
+
+  $content.masonry("reloadItems");
+  masonry();
 }
 
 //add an item
@@ -35,6 +66,21 @@ var saveArray = function saveArray(json){
   refresh();
 }
 
+var saveArrayNone = function saveArray(json){
+  array = new arrayList();
+  for(var i = 0; i < json.length; i++){
+    array.set(json[i]);
+  }
+}
+
+var saveArray2 = function saveArray2(json){
+  array = new arrayList();
+  for(var i = 0; i < json.length; i++){
+    array.set(json[i]);
+  }
+  placeNewItem();
+}
+
 //archive an item
 function toggleArchive(i){
   array.toggleArchive(i);
@@ -47,6 +93,12 @@ function removeAll(){
   while (content.firstChild) {
     content.removeChild(content.firstChild);
   }
+}
+
+function remove(id) {
+  var content = document.getElementById("content");
+  var div = document.getElementById(id);
+  content.removeChild(div);
 }
 
 //filter on tag
@@ -124,12 +176,15 @@ function placeAll(){
 
 //place only archived items on screen
 function placeArchived(){
+  get();
   removeAll();
   for(var i = 0; i < array.getLength(); i++){
     if(array.get(i).archived){
       place(array.get(i));
     }
   }
+  $content.masonry("reloadItems");
+  masonry();
 }
 
 //change an item to it's current form (executed when item is deselected)
@@ -144,8 +199,22 @@ function changeItem(i){
   var done = document.getElementById(i).getElementsByClassName("done")[0].checked;
   var archived = array.get(i).archived;
 
-  $.get("/change", {"idCounter":i, "title":title, "text":text, "pic":pic, "tags":tags, "date":date, "priority":priority, "done":done, "archived":archived}, get);
+  $.get("/change", {"idCounter":i, "title":title, "text":text, "pic":pic, "tags":tags, "date":date, "priority":priority, "done":done, "archived":archived}, function() {
+    $.getJSON("/get", function(json){
 
+      array = new arrayList();
+      for(var j = 0; j < json.length; j++){
+        array.set(json[i]);
+      }
+
+      remove(i);
+      if(!array.get(i).archived){
+        place(array.get(i));
+      }
+      $content.masonry("reloadItems");
+      masonry();
+    });
+  });
 }
 
 //arraylist t hold items
@@ -219,7 +288,7 @@ function place(item){
                 }
 
   //place on screen
-  document.getElementById("content").appendChild(div);
+  document.getElementById("content").insertBefore(div, document.getElementById("content").firstChild);
   document.getElementById(item.idCounter).getElementsByClassName("priority")[0].checked = item.priority;
   document.getElementById(item.idCounter).getElementsByClassName("done")[0].checked = item.done;
   reset();

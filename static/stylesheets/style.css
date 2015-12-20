@@ -5,6 +5,10 @@ body{
   text-align: center;
 }
 
+#newItem{
+  height: 213px;
+}
+
 #header img{
 	margin-left: auto;
 	margin-right: auto;
@@ -18,6 +22,8 @@ body{
   top: 70px;
   margin-left: 20px;
   margin-right: 20px;
+  width: 100%;
+  height: auto;
 }
 
 #search{
@@ -181,12 +187,15 @@ form{
   color: #000;
   background-color: white;
   display: block;
-  margin: 10px;
+  margin-bottom: 10px;
   padding: 20px;
   width: 300px;
-  float: left;
   border-radius: 3px;
   height: auto;
+}
+
+#content{
+  float: none;
 }
 
 #priority{
