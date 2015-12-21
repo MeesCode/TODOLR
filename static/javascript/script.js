@@ -98,6 +98,7 @@ function filterTag(){
       place(array.get(i));
     }
   }
+  masonry();
 }
 
 //show only items with priority

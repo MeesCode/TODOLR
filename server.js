@@ -108,7 +108,6 @@ app.get("/get", function(req, res){
 //dashboard page
 app.get("/dashboard/:type", function(req, res){
   var type = req.params.type;
-  console.log(type);
   if(type == "idcounter"){
     console.log("dashboard request: idCounter");
     var getQuery = "SELECT COUNT(*) AS idCounter FROM ToDoItem";
@@ -133,13 +132,17 @@ app.get("/dashboard/:type", function(req, res){
     console.log("dashboard request: users");
     var getQuery = "SELECT DISTINCT Pic AS pic FROM ToDoItem WHERE Pic <> \"\"";
   }
+  if(type == "clearDatabase"){
+    console.log("dashboard request: clear database");
+    var getQuery = "source /home/mees/todolr/TODOLR\\ Database.sql";
+  }
   res.writeHead(200);
   connection.query(getQuery, function(err, result) {
     if (!err){
       console.log("Database returned");
       res.end(JSON.stringify(result));
     } else {
-      console.log("error while getting dashboard info");
+      console.log("error while getting dashboard info: " + err);
     }
   });
 });

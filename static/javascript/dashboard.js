@@ -12,6 +12,10 @@ var idcounter = function idcounter(json){
   div.innerHTML = "Number of items: " + json[0].idCounter;
 }
 
+function clearDatabase(){
+  $.get("/dashboard/clearDatabase");
+}
+
 var pending = function pending(json){
   var div = document.getElementById("pending");
   var per = Math.round(json[0].completed*100/(json[0].pending+json[0].completed));
