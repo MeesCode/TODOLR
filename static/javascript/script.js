@@ -1,46 +1,42 @@
 
-$(window).load(function() {
-  getRefresh();
-  masonry();
-});
-
 function masonry(){
-  $content = $('#items');
-
+  var $content = $('#items');
+  $content.masonry("reloadItems");
 	$content.masonry({
 		columnWidth: 340,
 		itemSelector: '.item',
-		gutter: 10
+		gutter: 20
 	});
-
 }
 
 
 //initialize variables when page loads
 function onload(){
   array = new arrayList();
-  getRefresh();
+  get();
 }
 
 var get = function get(){
-  $.getJSON("/get", saveArray2);
-}
-
-var getRefresh = function getRefresh(){
   $.getJSON("/get", saveArray);
 }
 
-var placeNewItem = function placeNewItem(){
-  place(array.get(array.getLength()-1));
-  $content.masonry("reloadItems");
-  masonry();
+var getNone = function getNone(){
+  $.getJSON("/get", saveArrayNone);
+}
+
+var placeNewItem = function placeNewItem(i){
+    remove(i);
+    $.getJSON("/get", get);
+    if(!array.get(i).archived){
+      place(array.get(i));
+    }
+    masonry();
 }
 
 var refresh = function refresh(){
   removeAll();
   placeAll();
 
-  $content.masonry("reloadItems");
   masonry();
 }
 
@@ -66,25 +62,17 @@ var saveArray = function saveArray(json){
   refresh();
 }
 
-var saveArrayNone = function saveArray(json){
+var saveArrayNone = function saveArrayNone(json){
   array = new arrayList();
   for(var i = 0; i < json.length; i++){
     array.set(json[i]);
   }
-}
-
-var saveArray2 = function saveArray2(json){
-  array = new arrayList();
-  for(var i = 0; i < json.length; i++){
-    array.set(json[i]);
-  }
-  placeNewItem();
 }
 
 //archive an item
 function toggleArchive(i){
   array.toggleArchive(i);
-  changeItem(i);
+  changeItem(i, false);
 }
 
 //remove all items from screen (don't archive them)
@@ -120,6 +108,7 @@ function filterPriority(){
       place(array.get(i));
     }
   }
+  masonry();
 }
 
 //buble sort on date
@@ -161,6 +150,7 @@ function sortDate(reverse){
     	place(temp[i]);
     }
   }
+  masonry();
 
 }
 
@@ -176,19 +166,18 @@ function placeAll(){
 
 //place only archived items on screen
 function placeArchived(){
-  get();
+  getNone();
   removeAll();
   for(var i = 0; i < array.getLength(); i++){
     if(array.get(i).archived){
       place(array.get(i));
     }
   }
-  $content.masonry("reloadItems");
   masonry();
 }
 
 //change an item to it's current form (executed when item is deselected)
-function changeItem(i){
+function changeItem(i, place){
 
   var title = document.getElementById(i).getElementsByClassName("title")[0].value;
   var text = document.getElementById(i).getElementsByClassName("text")[0].value;
@@ -199,22 +188,13 @@ function changeItem(i){
   var done = document.getElementById(i).getElementsByClassName("done")[0].checked;
   var archived = array.get(i).archived;
 
-  $.get("/change", {"idCounter":i, "title":title, "text":text, "pic":pic, "tags":tags, "date":date, "priority":priority, "done":done, "archived":archived}, function() {
-    $.getJSON("/get", function(json){
-
-      array = new arrayList();
-      for(var j = 0; j < json.length; j++){
-        array.set(json[i]);
-      }
-
-      remove(i);
-      if(!array.get(i).archived){
-        place(array.get(i));
-      }
-      $content.masonry("reloadItems");
-      masonry();
-    });
-  });
+  if(place){
+    $.get("/change", {"idCounter":i, "title":title, "text":text, "pic":pic, "tags":tags, "date":date, "priority":priority, "done":done, "archived":archived}, placeNewItem(i));
+  } else {
+    $.get("/change", {"idCounter":i, "title":title, "text":text, "pic":pic, "tags":tags, "date":date, "priority":priority, "done":done, "archived":archived});
+    remove(i);
+    masonry();
+  }
 }
 
 //arraylist t hold items
@@ -273,14 +253,14 @@ function place(item){
   }
 
   //literally write the html
-  div.innerHTML = "<input type=\"text\" class=\"title\" placeholder=\"Title...\" onblur=\"changeItem(" + item.idCounter + ")\" value=\"" + item.title + "\"/>"
-                + "<input type=\"text\" class=\"text\" placeholder=\"Text...\" onblur=\"changeItem(" + item.idCounter + ")\" value=\"" + item.text + "\"/>"
-                + "<input type=\"text\" class=\"picbox\" placeholder=\"Picture URL...\" onblur=\"changeItem(" + item.idCounter + ")\" value=\"" + item.pic + "\"/>"
+  div.innerHTML = "<input type=\"text\" class=\"title\" placeholder=\"Title...\" onblur=\"changeItem(" + item.idCounter + ", true)\" value=\"" + item.title + "\"/>"
+                + "<input type=\"text\" class=\"text\" placeholder=\"Text...\" onblur=\"changeItem(" + item.idCounter + ", true)\" value=\"" + item.text + "\"/>"
+                + "<input type=\"text\" class=\"picbox\" placeholder=\"Picture URL...\" onblur=\"changeItem(" + item.idCounter + ", true)\" value=\"" + item.pic + "\"/>"
                 + "<img class=\"pic\" src=\"" + item.pic + "\">"
-                + "<input type=\"text\" class=\"tags\" placeholder=\"tags...\" onblur=\"changeItem(" + item.idCounter + ")\" value=\"" + item.tags + "\"/>"
-                + "<input type=\"date\" class=\"date\" onblur=\"changeItem(" + item.idCounter + ")\" value=\"" + item.date + "\"/>"
-                + "<input type=\"checkbox\" class=\"priority\" onclick=\"changeItem(" + item.idCounter + ")\"><br/>"
-                + "<input type=\"checkbox\" class=\"done\" onclick=\"changeItem(" + item.idCounter + ")\">";
+                + "<input type=\"text\" class=\"tags\" placeholder=\"tags...\" onblur=\"changeItem(" + item.idCounter + ", true)\" value=\"" + item.tags + "\"/>"
+                + "<input type=\"date\" class=\"date\" onblur=\"changeItem(" + item.idCounter + ", true)\" value=\"" + item.date + "\"/>"
+                + "<input type=\"checkbox\" class=\"priority\" onclick=\"changeItem(" + item.idCounter + ", true)\"><br/>"
+                + "<input type=\"checkbox\" class=\"done\" onclick=\"changeItem(" + item.idCounter + ", true)\">";
                 if(item.archived){
                   div.innerHTML += "<input type=\"button\" value=\"remove from archive\" onclick=\"toggleArchive(" + item.idCounter + ")\"/>";
                 } else {
