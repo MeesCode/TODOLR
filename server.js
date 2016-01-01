@@ -1,35 +1,14 @@
+require("./database.js");
+
 var http = require("http");
 var express = require("express");
 var url = require("url");
-var mysql = require("mysql");
 var app = express();
 var idCounter = 0;
 
 //create server and set templates
-http.createServer(app).listen(80);
+http.createServer(app).listen(8080);
 app.use(express.static('static'));
-
-//set databse connection variables
-var connection = mysql.createConnection({
-  host     : "localhost",
-  user     : "root",
-  password : "webdata",
-  database : "todo"
-});
-
-//connect to database
-connection.connect(function(err) {
-  console.log("Connected to database");
-});
-
-//check for errors
-var addToDatabase = function(err, result) {
-  if (!err){
-    console.log("item added");
-  } else {
-    console.log("error with database connection: " + err);
-  }
-}
 
 //change content in database
 app.get("/change", function(req, res){
@@ -49,8 +28,7 @@ app.get("/change", function(req, res){
 
   var tagQuery = "UPDATE Tag SET Text=\""+query["tags"]+"\" WHERE Id="+query["idCounter"];
 
-  connection.query(itemQuery, addToDatabase);
-  connection.query(tagQuery, addToDatabase);
+  set(itemQuery, tagQuery);
 
   res.end();
 });
@@ -74,9 +52,7 @@ app.get("/set", function(req, res){
   idCounter++;
   var itemTagQuery = "INSERT INTO ItemTag (ToDoId, TagId) VALUES (" + idCounter + ", " + idCounter + ")";
 
-  connection.query(itemQuery, addToDatabase);
-  connection.query(tagQuery, addToDatabase);
-  connection.query(itemTagQuery, addToDatabase);
+  set(itemQuery, tagQuery, itemTagQuery);
   res.end();
 });
 
@@ -84,65 +60,17 @@ app.get("/set", function(req, res){
 app.get("/get", function(req, res){
   console.log("get request");
   res.writeHead(200);
-  var getQuery = "SELECT Title AS title, ToDoItem.Text AS text, Pic AS pic, Tag.Text AS tags,"
-               + "DueDate AS date, Priority AS priority, Completed AS done, Archived AS archived, ToDoItem.Id-1 AS idCounter "
-               + "FROM ToDoItem, ItemTag, Tag "
-               + "WHERE ToDoItem.Id=ItemTag.ToDoId AND ItemTag.TagId=Tag.Id";
-  connection.query(getQuery, function(err, result) {
-    if (!err){
-      idCounter = result.length;
-      console.log("Database returned, idCounter: " + idCounter);
-      for(var i = 0; i < result.length; i++){
-        (result[i].priority == 1) ? result[i].priority = true : result[i].priority = false;
-        (result[i].done == 1) ? result[i].done = true : result[i].done = false;
-        (result[i].archived == 1) ? result[i].archived = true : result[i].archived = false;
-        res.end(JSON.stringify(result));
-      }
-      res.end();
-    } else {
-      console.log("error while setting: " + err);
-    }
+  get(function(result){
+    idCounter = result.length;
+    res.end(JSON.stringify(result));
   });
 });
 
 //dashboard page
 app.get("/dashboard/:type", function(req, res){
   var type = req.params.type;
-  if(type == "idcounter"){
-    console.log("dashboard request: idCounter");
-    var getQuery = "SELECT COUNT(*) AS idCounter FROM ToDoItem";
-  }
-  if(type == "pending"){
-    console.log("dashboard request: pending");
-    var getQuery = "SELECT SUM(Completed) AS completed, COUNT(*)-SUM(Completed) AS pending FROM ToDoItem";
-  }
-  if(type == "archived"){
-    console.log("dashboard request: archived");
-    var getQuery = "SELECT SUM(Archived) AS archived, COUNT(*)-SUM(Archived) AS active FROM ToDoItem";
-  }
-  if(type == "users"){
-    console.log("dashboard request: users");
-    var getQuery = "SELECT COUNT(*) AS users FROM User";
-  }
-  if(type == "tags"){
-    console.log("dashboard request: users");
-    var getQuery = "SELECT DISTINCT Text AS tag FROM Tag WHERE Text <> \"\"";
-  }
-  if(type == "images"){
-    console.log("dashboard request: users");
-    var getQuery = "SELECT DISTINCT Pic AS pic FROM ToDoItem WHERE Pic <> \"\"";
-  }
-  if(type == "clearDatabase"){
-    console.log("dashboard request: clear database");
-    var getQuery = "source /home/mees/todolr/TODOLR\\ Database.sql";
-  }
   res.writeHead(200);
-  connection.query(getQuery, function(err, result) {
-    if (!err){
-      console.log("Database returned");
-      res.end(JSON.stringify(result));
-    } else {
-      console.log("error while getting dashboard info: " + err);
-    }
+  dashboard(type, function(result){
+    res.end(JSON.stringify(result));
   });
 });
