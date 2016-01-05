@@ -16,6 +16,15 @@ function clearDatabase(){
   $.get("/dashboard/clearDatabase");
 }
 
+function setcookie(){
+  var expires = new Date();
+  expires.setTime(expires.getTime() + (7*24*60*60*1000));
+  var color = document.getElementById("colorpicker").value;
+  var cookie = "background=" + color + "; expires=" + expires + "; path=../";
+  console.log(cookie);
+  document.cookie = cookie;
+}
+
 var pending = function pending(json){
   var div = document.getElementById("pending");
   var per = Math.round(json[0].completed*100/(json[0].pending+json[0].completed));

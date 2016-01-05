@@ -1,6 +1,19 @@
 var url = require("url");
 
 module.exports = function(app){
+
+  app.get("/", function(req, res){
+    res.render("todos", { title: "username" });
+  });
+
+  app.get("/splash", function(req, res){
+    res.render("splash");
+  });
+
+  app.get("/dashboard", function(req, res){
+    res.render("dashboard");
+  });
+
   //change content in database
   app.get("/change", function(req, res){
     console.log("change request");

@@ -14,6 +14,18 @@ function masonry(){
 function onload(){
   array = new arrayList();
   get();
+
+  if(document.cookie){
+    var cookiesArray = document.cookie.split("; ");
+    var cookies=[];
+
+    for(var i=0; i < cookiesArray.length; i++) {
+      var cookie = cookiesArray[i].split("=");
+      cookies[cookie[0]]=cookie[1];
+      console.log(cookies.background);
+      document.body.style.backgroundColor = cookies.background;
+    }
+  }
 }
 
 var get = function get(){
