@@ -4,7 +4,7 @@ var mysql = require("mysql");
 var connection = mysql.createConnection({
   host     : "localhost",
   user     : "root",
-  password : "webdata",
+  password : "merel4840",
   database : "todo"
 });
 
@@ -22,24 +22,26 @@ connection.connect(function(err) {
   console.log("Connected to database");
 });
 
-change = function(itemQuery, tagQuery, itemTagQuery){
-  connection.query(itemQuery, addToDatabase);
-  connection.query(tagQuery, addToDatabase);
-}
-
-set = function(itemQuery, tagQuery, itemTagQuery){
+set = function(userQuery, itemQuery, tagQuery, itemTagQuery){
+  connection.query(userQuery, addToDatabase);
   connection.query(itemQuery, addToDatabase);
   connection.query(tagQuery, addToDatabase);
   connection.query(itemTagQuery, addToDatabase);
 }
 
-get = function(callback){
+change = function(itemQuery, tagQuery, itemTagQuery){
+  connection.query(itemQuery, addToDatabase);
+  connection.query(tagQuery, addToDatabase);
+}
+
+get = function(username, callback){
   var query = "SELECT Title AS title, ToDoItem.Text AS text, Pic AS pic, Tag.Text AS tags,"
                + "DueDate AS date, Priority AS priority, Completed AS done, Archived AS archived, ToDoItem.Id-1 AS idCounter "
-               + "FROM ToDoItem, ItemTag, Tag "
-               + "WHERE ToDoItem.Id=ItemTag.ToDoId AND ItemTag.TagId=Tag.Id";
+               + "FROM ToDoItem, ItemTag, Tag, User "
+               + "WHERE ToDoItem.Id=ItemTag.ToDoId AND ItemTag.TagId=Tag.Id AND User.Id=ToDoItem.Id AND User.Username=\""+username+"\"";
   connection.query(query, function(err, result) {
     if (!err){
+      idCounter = result.length;
       console.log("Database returned");
       for(var i = 0; i < result.length; i++){
         (result[i].priority == 1) ? result[i].priority = true : result[i].priority = false;
@@ -48,8 +50,8 @@ get = function(callback){
       }
       callback(result);
     } else {
-        console.log("error while setting: " + err);
-        callback();
+      console.log("error while getting: " + err);
+      callback();
     }
   });
 }

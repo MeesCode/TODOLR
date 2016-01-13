@@ -1,5 +1,5 @@
 TODOLR is a simple todo webapp using nodejs.
 
-to start: 
-npm install
-npm start
+to start: <br/>
+$ npm install <br/>
+$ npm start
