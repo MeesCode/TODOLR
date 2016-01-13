@@ -4,7 +4,7 @@ var mysql = require("mysql");
 var connection = mysql.createConnection({
   host     : "localhost",
   user     : "root",
-  password : "merel4840",
+  password : "webdata",
   database : "todo"
 });
 
